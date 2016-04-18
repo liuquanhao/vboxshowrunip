@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#This shell script can find the ip of running virtualbox system 
+#But now(2016/04/18 23:20[beijing]),it only to use on one running virtualbox system 
+#此脚本用户找到birdge方式单台在运行的virtualbox虚拟机ip
+VMNAME=`vboxmanage list runningvms | awk -F '"' '{print $2}'`
+if [ ! -n "VMNAME" ];then
+    for i in {100..120}
+    do
+        ping -c 1 192.168.1.$i &> /dev/null
+    done
+
+    VMMAC=`vboxmanage showvminfo ${VMNAME} |grep 'MAC'|awk '{print $4}'|awk -F',' '{print $1}' | sed -r 's/^(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})/\1:\2:\3:\4:\5:\6/'`
+    VMIP=`arp -a | grep -i $VMMAC |sed 's/^.*(\(.*\)).*$/\1/'`
+    echo $VMIP
+else
+    echo "Enn... , not has running virtualbox system."
+fi
+

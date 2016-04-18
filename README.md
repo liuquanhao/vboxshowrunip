@@ -1,1 +1,2 @@
 # vboxshowip
+此脚本用户找到birdge方式单台在运行的virtualbox虚拟机ip
