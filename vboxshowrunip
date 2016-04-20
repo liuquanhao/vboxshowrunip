@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #This shell script can find the ip of running virtualbox system 
-#But now(2016/04/18 23:20[beijing]),it only to use on one running virtualbox system 
+#But now(2016/04/18 23:20[beijing]),it only use to find on one running virtualbox system 
 #此脚本用户找到birdge方式单台在运行的virtualbox虚拟机ip
 VMNAME=`vboxmanage list runningvms | awk -F '"' '{print $2}'`
-if [ ! -n "VMNAME" ];then
+if [ -n $VMNAME ];then
     for i in {100..120}
     do
         ping -c 1 192.168.1.$i &> /dev/null
